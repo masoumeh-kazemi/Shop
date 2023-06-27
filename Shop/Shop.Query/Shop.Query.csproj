@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.Domain\Common.Domain.csproj" />
+    <ProjectReference Include="..\..\Common\Common.Query\Common.Query.csproj" />
+    <ProjectReference Include="..\Shop.Domain\Shop.Domain.csproj" />
+    <ProjectReference Include="..\Shop.Infrastructure\Shop.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Categories\GetById\" />
+    <Folder Include="Categories\GetByParentId\" />
+    <Folder Include="Categories\GetListByQuery\" />
+    <Folder Include="Comments\GetById\" />
+    <Folder Include="Comments\GetByFilter\" />
+    <Folder Include="Comments\DTOs\" />
+    <Folder Include="Products\GetProductByFilter\" />
+    <Folder Include="Products\GetProductById\" />
+    <Folder Include="Products\GetProductBySlug\" />
+    <Folder Include="Orders\DTOs\" />
+    <Folder Include="Orders\GetById\" />
+    <Folder Include="Orders\GetByFilter\" />
+    <Folder Include="Products\Dto\" />
+    <Folder Include="Roles\DTOs\" />
+    <Folder Include="Roles\GetById\" />
+    <Folder Include="Roles\GetList\" />
+    <Folder Include="Sellers\DTOs\" />
+    <Folder Include="Sellers\GetByFilter\" />
+    <Folder Include="SiteEntities\Banners\GetById\" />
+    <Folder Include="SiteEntities\Banners\GetList\" />
+    <Folder Include="SiteEntities\DTOs\" />
+    <Folder Include="SiteEntities\Sliders\GetById\" />
+    <Folder Include="Users\Addresses\GetById\" />
+    <Folder Include="Users\Addresses\GetList\" />
+    <Folder Include="Users\GetById\" />
+    <Folder Include="Users\GetByFilter\" />
+    <Folder Include="Users\DTOs\" />
+  </ItemGroup>
+
+</Project>

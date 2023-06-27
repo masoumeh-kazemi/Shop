@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.Domain\Common.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CategoryAgg\Services\" />
+    <Folder Include="CommentAgg\" />
+    <Folder Include="OrderAgg\Events\" />
+    <Folder Include="ProductAgg\Services\" />
+    <Folder Include="ProductAgg\Repository\" />
+    <Folder Include="RoleAgg\Enums\" />
+    <Folder Include="SellerAgg\Repository\" />
+    <Folder Include="SiteEntities\Repositories\" />
+    <Folder Include="UserAgg\Services\" />
+    <Folder Include="UserAgg\Repository\" />
+  </ItemGroup>
+
+</Project>
