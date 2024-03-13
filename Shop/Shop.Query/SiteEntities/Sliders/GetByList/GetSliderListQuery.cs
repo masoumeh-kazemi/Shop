@@ -5,12 +5,12 @@ using Shop.Query.SiteEntities.DTOs;
 
 namespace Shop.Query.SiteEntities.Sliders.GetByList;
 
-public class GetSliderByListQuery : IQuery<List<SliderDto>>
+public class GetSliderListQuery : IQuery<List<SliderDto>>
 {
     
 }
 
-public class GetSliderByListQueryHandler : IQueryHandler<GetSliderByListQuery, List<SliderDto>>
+public class GetSliderByListQueryHandler : IQueryHandler<GetSliderListQuery, List<SliderDto>>
 {
     private readonly ShopContext _context;
 
@@ -18,7 +18,7 @@ public class GetSliderByListQueryHandler : IQueryHandler<GetSliderByListQuery, L
     {
         _context = context;
     }
-    public async Task<List<SliderDto>> Handle(GetSliderByListQuery request, CancellationToken cancellationToken)
+    public async Task<List<SliderDto>> Handle(GetSliderListQuery request, CancellationToken cancellationToken)
     {
         var slider = await _context.Sliders.Select(slider => new SliderDto()
         {

@@ -11,9 +11,9 @@ namespace Shop.Presentation.Facade.Comments;
 
 public class CommentFacade : ICommentFacade
 {
-    private readonly Mediator _mediator;
+    private readonly IMediator _mediator;
 
-    public CommentFacade(Mediator mediator)
+    public CommentFacade(IMediator mediator)
     {
         _mediator = mediator;
     }
@@ -28,7 +28,7 @@ public class CommentFacade : ICommentFacade
 
     }
 
-    public async Task<OperationResult> ChangeCommentStatus(ChangeCommentStatusCommand command)
+    public async Task<OperationResult> ChangeStatus(ChangeCommentStatusCommand command)
     {
         return await _mediator.Send(command);
     }
@@ -38,7 +38,7 @@ public class CommentFacade : ICommentFacade
         return await _mediator.Send(new GetCommentByIdQuery(id));
     }
 
-    public async Task<CommentFilterResult?> GetCommentFilterById(CommentFilterParams filterParams)
+    public async Task<CommentFilterResult?> GetCommentsByFilter(CommentFilterParams filterParams)
     {
         return await _mediator.Send(new GetCommentByFilterQuery(filterParams));
     }

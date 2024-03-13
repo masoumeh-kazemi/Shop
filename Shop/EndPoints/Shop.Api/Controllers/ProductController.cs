@@ -3,18 +3,20 @@ using Common.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Shop.Api.Infrastructure.Security;
 using Shop.Api.ViewModels.Products;
 using Shop.Application.Products.AddImage;
 using Shop.Application.Products.Create;
 using Shop.Application.Products.Edit;
 using Shop.Application.Products.RemoveImage;
+using Shop.Domain.RoleAgg.Enums;
 using Shop.Presentation.Facade.Products;
 using Shop.Query.Products.Dto;
 using Shop.Query.Products.GetProductById;
 
 namespace Shop.Api.Controllers
 {
-    [Authorize]
+    [PermissionChecker(Permission.CRUD_Product)]
     public class ProductController : ApiController
     {
         private readonly IProductFacade _productFacade;
@@ -24,13 +26,6 @@ namespace Shop.Api.Controllers
             _productFacade = productFacade;
         }
 
-        //[HttpPost]
-        //public async Task<ApiResult> CreateProducts([FromForm] CreateProductCommand command)
-        //{
-        //    var result = await _productFacade.CreateProducts(command);
-        //    return CommandResult(result);
-
-        //}
 
         [HttpPost]
         public async Task<ApiResult> CreateProduct([FromForm] CreateProductViewModel command)
@@ -51,12 +46,13 @@ namespace Shop.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ApiResult<ProductDto>> GetProductById(long id)
+        public async Task<ApiResult<ProductDto?>> GetProductById(long id)
         {
             var result = await _productFacade.GetProductById(id);
             return QueryResult(result);
         }
 
+        [AllowAnonymous]
         [HttpGet("{slug}")]
         public async Task<ApiResult<ProductDto?>> GetProductBySlug(string slug)
         {
@@ -64,10 +60,19 @@ namespace Shop.Api.Controllers
             return QueryResult(result);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ApiResult<ProductFilterResult>> GetProductByFilter([FromQuery] ProductFilterParams filterParams)
         {
             var result = await _productFacade.GetProductsByFilter(filterParams);
+            return QueryResult(result);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("Shop")]
+        public async Task<ApiResult<ProductShopResult>> GetProductForShopFilter([FromQuery] ProductShopFilterParam filterParam)
+        {
+            var result = await _productFacade.GetProductForShop(filterParam);
             return QueryResult(result);
         }
 

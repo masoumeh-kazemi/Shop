@@ -34,6 +34,7 @@
     <Folder Include="Users\Edit\" />
     <Folder Include="Users\EditAddress\" />
     <Folder Include="Users\DeleteAddress\" />
+    <Folder Include="Users\RemoveToken\" />
     <Folder Include="Users\Register\" />
   </ItemGroup>
 

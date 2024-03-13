@@ -20,8 +20,8 @@ public class RegisterUserCommandHandler : IBaseCommandHandler<RegisterUserComman
     }
     public async Task<OperationResult> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
-
-        var user = User.Register(request.PhoneNumber, Sha256Hasher.Hash(request.Password), _domainService);
+        var passwordHashed = Sha256Hasher.Hash(request.Password);
+        var user = User.Register(request.PhoneNumber, passwordHashed, _domainService);
         if (user == null)
             return OperationResult.NotFound();
 

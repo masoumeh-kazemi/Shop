@@ -12,7 +12,7 @@ public class NullOrEmptyDomainDataException : BaseDomainException
 
     }
 
-    public static void CheckString(string value, string nameOffField)
+    public static void  CheckString(string value, string nameOffField)
     {
         if (string.IsNullOrEmpty(value))
             throw new NullOrEmptyDomainDataException($"{nameOffField} is null or empty");

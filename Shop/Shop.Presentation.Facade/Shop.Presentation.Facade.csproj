@@ -13,9 +13,10 @@
 
   <ItemGroup>
     <Folder Include="Categories\" />
-    <Folder Include="Sellers\" />
+    <Folder Include="Roles\" />
     <Folder Include="Products\" />
     <Folder Include="Orders\" />
+    <Folder Include="Sellers\Inventories\" />
     <Folder Include="SiteEntities\Banner\" />
     <Folder Include="SiteEntities\Slider\" />
     <Folder Include="Users\Address\" />

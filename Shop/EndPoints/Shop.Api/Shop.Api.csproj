@@ -29,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Infrastructure\Security\" />
     <Folder Include="ViewModels\Auth\" />
     <Folder Include="ViewModels\Users\" />
     <Folder Include="ViewModels\Products\" />

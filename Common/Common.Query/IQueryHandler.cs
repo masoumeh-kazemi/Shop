@@ -9,3 +9,4 @@ public interface IQueryHandler<TQuery, TResponse> : IRequestHandler<TQuery, TRes
 {
 
 }
+

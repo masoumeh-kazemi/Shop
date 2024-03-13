@@ -99,6 +99,7 @@ public class UserConfigurations : IEntityTypeConfiguration<User>
         builder.OwnsMany(b => b.Roles, option =>
         {
             option.ToTable("Roles", "user");
+            option.HasKey(b => b.Id);
             option.HasIndex(b => b.UserId);
         });
     }

@@ -6,16 +6,16 @@ using Shop.Query.Roles.DTOs;
 
 namespace Shop.Query.Roles.GetById;
 
-public record GetRoleById(long RoleId) : IQuery<RoleDto>;
+public record GetRoleByIdQuery(long RoleId) : IQuery<RoleDto>;
 
-public class GetRoleByIdQueryHandler : IQueryHandler<GetRoleById, RoleDto>
+public class GetRoleByIdQueryHandler : IQueryHandler<GetRoleByIdQuery, RoleDto>
 {
     private readonly ShopContext _context;
     public GetRoleByIdQueryHandler(ShopContext context)
     {
         _context = context;
     }
-    public async Task<RoleDto> Handle(GetRoleById request, CancellationToken cancellationToken)
+    public async Task<RoleDto> Handle(GetRoleByIdQuery request, CancellationToken cancellationToken)
     {
         var role = await _context.Roles
             .FirstOrDefaultAsync(f => f.Id == request.RoleId, cancellationToken: cancellationToken);

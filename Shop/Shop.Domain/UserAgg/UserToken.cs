@@ -6,6 +6,10 @@ namespace Shop.Domain.UserAgg;
 
 public class UserToken : BaseEntity
 {
+    private UserToken()
+    {
+
+    }
     public UserToken(string hasJwtToken, string hashRefreshToken, DateTime tokenExpireDate, DateTime refreshTokenExpireDate, string device)
     {
         HasJwtToken = hasJwtToken;

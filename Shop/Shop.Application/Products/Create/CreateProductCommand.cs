@@ -22,8 +22,8 @@ public class CreateProductCommand : IBaseCommand
     //    ImageFile = imageFile;
     //    Description = description;
     //    CategoryId = categoryId;
-    //    SubCategroyId = subCategroyId;
-    //    SecondarySubCategroyId = secondarySubCategroyId;
+    //    SubCategoryId = subCategroyId;
+    //    SecondarySubCategoryId = secondarySubCategroyId;
     //    Slug = slug;
     //    SeoData = seoData;
     //    Specifications = specifications;

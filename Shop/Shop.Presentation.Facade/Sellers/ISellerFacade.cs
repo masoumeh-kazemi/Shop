@@ -7,6 +7,7 @@ using Shop.Application.Sellers.EditInventory;
 using Shop.Query.Sellers.DTOs;
 using Shop.Query.Sellers.GetByFilter;
 using Shop.Query.Sellers.GetById;
+using Shop.Query.Sellers.GetByUserId;
 
 namespace Shop.Presentation.Facade.Sellers;
 
@@ -18,6 +19,7 @@ public interface ISellerFacade
     Task<OperationResult> EditSellerInventory(EditSellerInventoryCommand command);
 
     Task<SellerDto> GetSellerById(long id);
+    Task<SellerDto?> GetSellerByUserId(long userId);
     Task<SellerFilterResult> GetSellerByFilter(SellerFilterParams filterParams);
 }
 
@@ -52,6 +54,11 @@ public class SellerFacade : ISellerFacade
     public async Task<SellerDto> GetSellerById(long id)
     {
         return await _mediator.Send(new GetSellerByIdQuery(id));
+    }
+
+    public async Task<SellerDto?> GetSellerByUserId(long userId)
+    {
+        return await _mediator.Send(new GetSellerByUserIdQuery(userId));
     }
 
     public async Task<SellerFilterResult> GetSellerByFilter(SellerFilterParams filterParams)

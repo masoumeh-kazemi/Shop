@@ -10,9 +10,9 @@ public interface ICommentFacade
 {
     Task<OperationResult> CreateComment(CreateCommentCommand command);
     Task<OperationResult> EditComment(EditCommentCommand command);
-    Task<OperationResult>  ChangeCommentStatus(ChangeCommentStatusCommand command);
+    Task<OperationResult> ChangeStatus(ChangeCommentStatusCommand command);
 
     Task<CommentDto?> GetCommentById(long id);
-    Task<CommentFilterResult?>  GetCommentFilterById(CommentFilterParams filterParams);
+    Task<CommentFilterResult?>  GetCommentsByFilter(CommentFilterParams filterParams);
 
 }

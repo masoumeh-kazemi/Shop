@@ -20,7 +20,5 @@ public class GetUserAddressByIdQueryHandler : IQueryHandler<GetUserAddressByIdQu
         var sql = $"Select top 1 from {_dapperContext.UserAddress} where id=@id";
         using var context = _dapperContext.CreateConnection();
         return await context.QueryFirstOrDefaultAsync<AddressDto?>(sql, new { id = request.AddressId });
-
-
     }
 }

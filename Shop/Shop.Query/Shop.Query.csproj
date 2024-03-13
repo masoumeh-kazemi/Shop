@@ -26,12 +26,14 @@
     <Folder Include="Orders\DTOs\" />
     <Folder Include="Orders\GetById\" />
     <Folder Include="Orders\GetByFilter\" />
-    <Folder Include="Products\Dto\" />
+    <Folder Include="Products\GetForShop\" />
     <Folder Include="Roles\DTOs\" />
-    <Folder Include="Roles\GetById\" />
     <Folder Include="Roles\GetList\" />
     <Folder Include="Sellers\DTOs\" />
     <Folder Include="Sellers\GetByFilter\" />
+    <Folder Include="Sellers\GetByUserId\" />
+    <Folder Include="Sellers\Inventories\GetById\" />
+    <Folder Include="Sellers\Inventories\GetList\" />
     <Folder Include="SiteEntities\Banners\GetById\" />
     <Folder Include="SiteEntities\Banners\GetList\" />
     <Folder Include="SiteEntities\DTOs\" />

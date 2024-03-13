@@ -7,7 +7,6 @@ namespace Shop.Query.Categories.GetListByQuery;
 
 public class GetCategoryListByQuery : IQuery<List<CategoryDto>>
 {
-    
 }
 
 public class GetCategoryListByQueryHandler : IQueryHandler<GetCategoryListByQuery, List<CategoryDto>>

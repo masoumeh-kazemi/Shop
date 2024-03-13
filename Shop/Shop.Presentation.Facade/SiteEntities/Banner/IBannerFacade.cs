@@ -2,6 +2,7 @@
 using MediatR;
 using Shop.Application.SiteEntities.Banners.Create;
 using Shop.Query.SiteEntities.Banners.GetById;
+using Shop.Query.SiteEntities.Banners.GetList;
 using Shop.Query.SiteEntities.DTOs;
 
 namespace Shop.Presentation.Facade.SiteEntities.Banner;
@@ -10,6 +11,7 @@ public interface IBannerFacade
 {
     Task<OperationResult> Create(CreateBannerCommand command);
     Task<BannerDto> GetById(long id);
+    Task<List<BannerDto>> GetBanners();
 }
 
 public class BannerFacade : IBannerFacade
@@ -28,5 +30,10 @@ public class BannerFacade : IBannerFacade
     public async Task<BannerDto> GetById(long id)
     {
         return await _mediator.Send(new GetBannerByIdQuery(id));
+    }
+
+    public async Task<List<BannerDto>> GetBanners()
+    {
+        return await _mediator.Send(new GetBannerListQuery());
     }
 }

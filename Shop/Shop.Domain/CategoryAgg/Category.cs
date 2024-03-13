@@ -21,7 +21,6 @@ public class Category : AggregateRoot
         Slug = slug;
         SeoData = seoData;
         Childs = new List<Category>();
-
     }
 
     public string Title { get; private set; }

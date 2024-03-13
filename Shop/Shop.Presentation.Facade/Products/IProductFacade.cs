@@ -5,6 +5,7 @@ using Shop.Application.Products.Create;
 using Shop.Application.Products.Edit;
 using Shop.Application.Products.RemoveImage;
 using Shop.Query.Products.Dto;
+using Shop.Query.Products.GetForShop;
 using Shop.Query.Products.GetProductByFilter;
 using Shop.Query.Products.GetProductById;
 using Shop.Query.Products.GetProductBySlug;
@@ -22,6 +23,7 @@ public interface IProductFacade
     Task<ProductDto?> GetProductById(long productId);
     Task<ProductDto?> GetProductBySlug(string slug);
     Task<ProductFilterResult> GetProductsByFilter(ProductFilterParams filterParams);
+    Task<ProductShopResult> GetProductForShop(ProductShopFilterParam filterParam);
 }
 
 
@@ -66,5 +68,10 @@ public class ProductFacade: IProductFacade
     public async Task<ProductFilterResult> GetProductsByFilter(ProductFilterParams filterParams)
     {
         return await _mediator.Send(new GetProductByFilterQuery(filterParams));
+    }
+
+    public async Task<ProductShopResult> GetProductForShop(ProductShopFilterParam filterParam)
+    {
+        return await _mediator.Send(new GetProductsForShopQuery(filterParam));
     }
 }
