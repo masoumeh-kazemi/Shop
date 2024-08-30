@@ -5,7 +5,7 @@ using Shop.Domain.CommentAgg;
 
 namespace Shop.Application.Comments.Edit;
 
-public record EditCommentCommand(long Id, string Text) : IBaseCommand;
+public record EditCommentCommand(long CommentId, string Text, long UserId) : IBaseCommand;
 
 public class EditCommentCommandHandler : IBaseCommandHandler<EditCommentCommand>
 {
@@ -17,8 +17,8 @@ public class EditCommentCommandHandler : IBaseCommandHandler<EditCommentCommand>
     }
     public async Task<OperationResult> Handle(EditCommentCommand request, CancellationToken cancellationToken)
     {
-        var comment = await _repository.GetTracking(request.Id);
-        if (comment == null)
+        var comment = await _repository.GetTracking(request.CommentId);
+        if (comment == null || comment.UserId != request.UserId)
             return OperationResult.NotFound();
 
         comment.Edit(request.Text);

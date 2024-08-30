@@ -26,6 +26,5 @@ public class OrderAddress : BaseEntity
     public string Family { get; private set; }
     public string NationalCode { get; private set; }
 
-    //navigation property
-    public Order Order { get; set; }
+  
 }

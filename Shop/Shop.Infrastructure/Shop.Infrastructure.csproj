@@ -27,7 +27,6 @@
     <Folder Include="Persistent.EF\OrderAgg\" />
     <Folder Include="Persistent.EF\ProductAgg\" />
     <Folder Include="Persistent.EF\RoleAgg\" />
-    <Folder Include="_Utilities\" />
   </ItemGroup>
 
 </Project>

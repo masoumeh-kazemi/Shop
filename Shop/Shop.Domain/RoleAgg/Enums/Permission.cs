@@ -2,9 +2,9 @@
 
 public enum Permission
 {
-    PanelAdmin,
-    EditProfile,
-    ChangePassword,
+    Panel_Admin,
+    Edit_Profile,
+    Change_Password,
     CRUD_Banner,
     CRUD_Slider,
     CRUD_User,

@@ -29,25 +29,24 @@ public class GetProductByFilterQueryHandler : IQueryHandler<GetProductByFilterQu
         var result = _context.Products.OrderByDescending(d => d.Id).AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(@params.Slug))
-            result.Where(f => f.Slug == @params.Slug);
+            result = result.Where(r => r.Slug == @params.Slug);
 
         if (!string.IsNullOrWhiteSpace(@params.Title))
-            result.Where(f => f.Title.Contains(@params.Title));
+            result = result.Where(r => r.Title.Contains(@params.Title));
 
         if (@params.Id != null)
-            result.Where(f => f.Id == @params.Id);
+            result = result.Where(r => r.Id == @params.Id);
 
         var skip = (@params.PageId - 1) * @params.Take;
         var model = new ProductFilterResult()
         {
-            Data = await result.Skip(skip).Take(@params.Take)
-                .Select(s => s.MapListData()).ToListAsync(cancellationToken: cancellationToken),
-
+            Data = await result.Skip(skip).Take(@params.Take).Select(s => s.MapListData())
+                .ToListAsync(cancellationToken),
             FilterParams = @params
         };
-
         model.GeneratePaging(result, @params.Take, @params.PageId);
         return model;
+
 
     }
 }

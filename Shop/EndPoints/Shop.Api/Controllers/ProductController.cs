@@ -16,7 +16,7 @@ using Shop.Query.Products.GetProductById;
 
 namespace Shop.Api.Controllers
 {
-    [PermissionChecker(Permission.CRUD_Product)]
+    //[PermissionChecker(Permission.CRUD_Product)]
     public class ProductController : ApiController
     {
         private readonly IProductFacade _productFacade;
@@ -45,6 +45,7 @@ namespace Shop.Api.Controllers
             return CommandResult(result);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ApiResult<ProductDto?>> GetProductById(long id)
         {
@@ -53,10 +54,18 @@ namespace Shop.Api.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("{slug}")]
+        [HttpGet("bySlug/{slug}")]
         public async Task<ApiResult<ProductDto?>> GetProductBySlug(string slug)
         {
             var result = await _productFacade.GetProductBySlug(slug);
+            return QueryResult(result);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("single/{slug}")]
+        public async Task<ApiResult<IProductFacade.SingleProductDto?>> GetSingleProductBySlug(string slug)
+        {
+            var result = await _productFacade.GetProductBySlugForSinglePage(slug);
             return QueryResult(result);
         }
 

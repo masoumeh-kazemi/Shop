@@ -1,6 +1,8 @@
 ﻿using Common.Domain;
 using Common.Domain.Exceptions;
+using Shop.Domain.OrderAgg.Events;
 using Shop.Domain.OrderAgg.ValueObjects;
+using Shop.Domain.SiteEntities;
 
 namespace Shop.Domain.OrderAgg;
 
@@ -20,7 +22,7 @@ public class Order : AggregateRoot
     public OrderStatus Status { get; private set; }
     public OrderDiscount? Discount { get; private set; }
     public OrderAddress? Address { get; private set; }
-    public ShippingMethod? ShippingMethod { get; private set; }
+    public OrderShippingMethod? ShippingMethod { get; private set; }
     public List<OrderItem> Items { get; private set; }
     public DateTime LastUpdate { get; private set; }
 
@@ -89,15 +91,23 @@ public class Order : AggregateRoot
         currentItem.ChangeCount(newCount);
     }
 
+    public void Finally()
+    {
+        Status = OrderStatus.Finally;
+        LastUpdate = DateTime.Now;
+        AddDomainEvent(new OrderFinalized(Id));
+    }
+
     public void ChangeStatus(OrderStatus status)
     {
         Status = status;
         LastUpdate = DateTime.Now;
     }
 
-    public void Checkout(OrderAddress orderAddress)
+    public void Checkout(OrderAddress orderAddress, OrderShippingMethod shippingMethod)
     {
         ChangeOrderGuard();
+        ShippingMethod = shippingMethod;
         Address = orderAddress;
     }
 

@@ -10,17 +10,10 @@ namespace Shop.Application.SiteEntities.Banners.Create;
 
 public class CreateBannerCommand : IBaseCommand
 {
-    public CreateBannerCommand(string link, IFormFile imageFile, BannerPosition position)
-    {
-        Link = link;
 
-        Position = position;
-        ImageFile = imageFile;
-    }
-    public string Link { get; private set; }
-    public IFormFile ImageFile { get; private set; }
-
-    public BannerPosition Position { get; private set; }
+    public string Link { get;  set; }
+    public IFormFile ImageFile { get;  set; }
+    public BannerPosition Position { get;  set; }
 }
 
 public class CreateBannerCommandHandler : IBaseCommandHandler<CreateBannerCommand>

@@ -2,6 +2,7 @@
 using MediatR;
 using Shop.Application.Comments.ChangesStatus;
 using Shop.Application.Comments.Create;
+using Shop.Application.Comments.Delete;
 using Shop.Application.Comments.Edit;
 using Shop.Query.Comments.DTOs;
 using Shop.Query.Comments.GetByFilter;
@@ -29,6 +30,11 @@ public class CommentFacade : ICommentFacade
     }
 
     public async Task<OperationResult> ChangeStatus(ChangeCommentStatusCommand command)
+    {
+        return await _mediator.Send(command);
+    }
+
+    public async Task<OperationResult> DeleteComment(DeleteCommentCommand command)
     {
         return await _mediator.Send(command);
     }

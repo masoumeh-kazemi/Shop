@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Shop.Api.Infrastructure.Security;
 using Shop.Application.Comments.ChangesStatus;
 using Shop.Application.Comments.Create;
+using Shop.Application.Comments.Delete;
 using Shop.Application.Comments.Edit;
 using Shop.Domain.CommentAgg;
 using Shop.Domain.RoleAgg.Enums;
@@ -33,18 +34,18 @@ namespace Shop.Api.Controllers
         }
 
 
-        //[HttpGet("productComments")]
-        //public async Task<ApiResult<CommentFilterResult>> GetProductComments(int pageId = 1, int take = 10, int productId = 0)
-        //{
-        //    var result = await _commentFacade.GetCommentsByFilter(new CommentFilterParams()
-        //    {
-        //        ProductId = productId,
-        //        PageId = pageId,
-        //        Take = take,
-        //        CommentStatus = CommentStatus.Accepted
-        //    });
-        //    return QueryResult(result);
-        //}
+        [HttpGet("productComments")]
+        public async Task<ApiResult<CommentFilterResult>> GetProductComments(int pageId = 1, int take = 1, int productId = 0)
+        {
+            var result = await _commentFacade.GetCommentsByFilter(new CommentFilterParams()
+            {
+                ProductId = productId,
+                PageId = pageId,
+                Take = take,
+                CommentStatus = CommentStatus.Accepted
+            });
+            return QueryResult(result);
+        }
 
         [PermissionChecker(Permission.Comment_Management)]
         [HttpGet("{commentId}")]
@@ -85,5 +86,14 @@ namespace Shop.Api.Controllers
         //    var result = await _commentFacade.DeleteComment(new DeleteCommentCommand(commentId, User.GetUserId()));
         //    return CommandResult(result);
         //}
+
+        [HttpDelete("{commentId}")]
+        [Authorize]
+        public async Task<ApiResult> DeleteComment(long commentId)
+        {
+            var userId = User.GetUserId();
+            var result = await _commentFacade.DeleteComment(new DeleteCommentCommand(commentId, userId));
+            return CommandResult(result);
+        }
     }
 }

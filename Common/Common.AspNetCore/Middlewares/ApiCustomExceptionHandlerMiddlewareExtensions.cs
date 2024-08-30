@@ -103,5 +103,5 @@ public class ApiCustomExceptionHandlerMiddleware
             context.Response.ContentType = "application/json";
             await context.Response.WriteAsync(json);
         }
-    }
+      }
 }

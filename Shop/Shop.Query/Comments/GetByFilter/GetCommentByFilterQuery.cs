@@ -25,6 +25,10 @@ public class GetCommentByFilterQueryHandler : IQueryHandler<GetCommentByFilterQu
     {
         var @param = request.FilterParams;
         var result = _context.Comments.OrderByDescending(f=>f.Id).AsQueryable();
+
+        if (@param.ProductId != null)
+            result = result.Where(f => f.ProductId == @param.ProductId);
+
         if (@param.CommentStatus != null)
             result = result.Where(f => f.Status == @param.CommentStatus);
 
@@ -43,10 +47,12 @@ public class GetCommentByFilterQueryHandler : IQueryHandler<GetCommentByFilterQu
             Data = await result.Skip(skip).Take(@param.Take)
                 .Select(comment => comment.Map()).ToListAsync(cancellationToken: cancellationToken),
 
-            FilterParams = @param
+            FilterParams = @param,
         };
+        model.Data.ForEach(comment=>comment.UserFullName = comment.GetUserFullName(_context));
 
         model.GeneratePaging(result, @param.Take, @param.PageId);
+
         return model;
     }
 }

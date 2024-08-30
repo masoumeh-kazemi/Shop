@@ -22,7 +22,6 @@
     <Folder Include="ProductAgg\Repository\" />
     <Folder Include="RoleAgg\Enums\" />
     <Folder Include="SellerAgg\Repository\" />
-    <Folder Include="SiteEntities\Repositories\" />
     <Folder Include="UserAgg\Services\" />
     <Folder Include="UserAgg\Repository\" />
   </ItemGroup>

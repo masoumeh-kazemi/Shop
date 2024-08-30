@@ -17,6 +17,7 @@ public class CreateRoleCommandHandler : IBaseCommandHandler<CreateRoleCommand>
     public async Task<OperationResult> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
     {
         var rolePermissions = new List<RolePermission>();
+
         request.Permissions.ForEach(permission =>
         {
             rolePermissions.Add(new RolePermission(permission));

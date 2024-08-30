@@ -68,7 +68,7 @@ public class ApiController : ControllerBase
 
     protected string JoinErrors()
     {
-        var errors = new Dictionary<string, List<string>>();
+        var errors = new Dictionary<string, List<string?>>();
 
         if (!ModelState.IsValid)
         {

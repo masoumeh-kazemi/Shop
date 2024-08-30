@@ -26,7 +26,7 @@ public class CategoryRepository : BaseRepository<Category> , ICategoryRepository
 
         if (isProductExist)
             return false;
-
+        
         if (category.Childs.Any(c => c.Childs.Any()))
         {
             Context.RemoveRange(category.Childs.SelectMany(c=>c.Childs));

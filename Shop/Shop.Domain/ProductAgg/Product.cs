@@ -13,7 +13,7 @@ public class Product:AggregateRoot
 
     }
     public Product(string title, string imageName, string description, long categoryId, long subCategoryId
-        , long secondarySubCategoryId, IProductDomainService domainService, string slug, SeoData seoData)
+        , long? secondarySubCategoryId, IProductDomainService domainService, string slug, SeoData seoData)
     {
         NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));
         Guard(title, slug, description, domainService);
@@ -22,7 +22,6 @@ public class Product:AggregateRoot
         Description = description;
         CategoryId = categoryId;
         SubCategoryId = subCategoryId;
-
         SecondarySubCategoryId = secondarySubCategoryId;
         Slug = slug.ToSlug();
         SeoData = seoData;
@@ -42,7 +41,7 @@ public class Product:AggregateRoot
 
 
     public void Edit(long Id, string title, string description, long categoryId, long subCategoryId
-        , long secondarySubCategoryId, IProductDomainService domainService, string slug, SeoData seoData)
+        , long? secondarySubCategoryId, IProductDomainService domainService, string slug, SeoData seoData)
     {
         Title = title;
         Description = description;
@@ -82,7 +81,7 @@ public class Product:AggregateRoot
     {
         NullOrEmptyDomainDataException.CheckString(title, nameof(title));
         NullOrEmptyDomainDataException.CheckString(description, nameof(description));
-        NullOrEmptyDomainDataException.CheckString(Slug, nameof(Slug));
+        NullOrEmptyDomainDataException.CheckString(slug, nameof(slug));
         if (slug != Slug)
             if (domainService.SlugIsExist(slug.ToSlug()))
                 throw new SlugIsDuplicateException();

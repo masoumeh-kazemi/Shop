@@ -10,6 +10,8 @@ using Shop.Application.Orders.Checkout;
 using Shop.Application.Orders.DecreaseItemCount;
 using Shop.Application.Orders.IncreaseItemCount;
 using Shop.Application.Orders.RemoveItem;
+using Shop.Application.Orders.SendOrder;
+using Shop.Domain.OrderAgg;
 using Shop.Domain.RoleAgg.Enums;
 using Shop.Presentation.Facade.Orders;
 using Shop.Query.Categories.DTOs;
@@ -36,12 +38,34 @@ namespace Shop.Api.Controllers
             return QueryResult(result);
         }
 
+        [HttpGet("current/filter")]
+        public async Task<ApiResult<OrderFilterResult>> GetOrderByFilter(int pageId=1, int take=10,OrderStatus? status = null)
+        {
+            var result = await _orderFacade.GetOrderByFilter(new OrderFilterParams()
+            {
+                PageId = pageId,
+                Take = take,
+                Status = status,
+                EndDate = null,
+                StartDate = null,
+                UserId = User.GetUserId()
+            });
+            return QueryResult(result);
+        }
 
         [HttpGet("{orderId}")]
         public async Task<ApiResult<OrderDto?>> GetOrderById(long orderId)
         {
             var result = await _orderFacade.GetOrderById(orderId);
             return QueryResult(result);
+        }
+
+        [HttpGet("current")]
+        public async Task<ApiResult<OrderDto?>> GetCurrentOrder()
+        {
+            var result = await _orderFacade.GetCurrentOrder(User.GetUserId());
+            var orderResult = QueryResult(result);
+            return orderResult;
         }
 
         [HttpPost]
@@ -59,6 +83,14 @@ namespace Shop.Api.Controllers
             return CommandResult(result);
         }
 
+        [HttpPut("sendOrder/{orderId}")]
+        public async Task<ApiResult> SendOrder(long orderId)
+        {
+            var result = await _orderFacade.SendOrder(new SendOrderCommand(orderId));
+            return CommandResult(result);
+        }
+
+
         [HttpPut("OrderItem/IncreaseCount")]
         public async Task<ApiResult> IncreaseOrderItemCount(IncreaseOrderItemCountCommand command)
         {
@@ -73,10 +105,10 @@ namespace Shop.Api.Controllers
             return CommandResult(result);
         }
 
-        [HttpDelete("OrderItem")]
-        public async Task<ApiResult> RemoveOrderItem(RemoveOrderItemCommand command)
+        [HttpDelete("OrderItem/{itemId}")]
+        public async Task<ApiResult> RemoveOrderItem(long itemId)
         {
-            var result = await _orderFacade.RemoveOrderItem(command);
+            var result = await _orderFacade.RemoveOrderItem(new RemoveOrderItemCommand(User.GetUserId(), itemId));
             return CommandResult(result);
         }
     }

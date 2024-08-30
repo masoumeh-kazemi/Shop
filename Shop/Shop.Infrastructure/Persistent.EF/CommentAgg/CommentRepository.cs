@@ -10,5 +10,10 @@ public class CommentRepository : BaseRepository<Comment> , ICommentRepository
     public CommentRepository(ShopContext context) : base(context)
     {
     }
+
+    public void Delete(Comment comment)
+    {
+        Context.Comments.Remove(comment);
+    }
 }
 

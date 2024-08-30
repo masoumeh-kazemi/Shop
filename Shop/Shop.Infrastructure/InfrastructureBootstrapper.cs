@@ -18,6 +18,7 @@ using Shop.Infrastructure.Persistent.EF.RoleAgg;
 using Shop.Infrastructure.Persistent.EF.SellerAgg;
 using Shop.Infrastructure.Persistent.EF.SiteEntities.Repositories;
 using Shop.Infrastructure.Persistent.EF.UsersAgg;
+using System.Reflection;
 
 namespace Shop.Infrastructure;
 
@@ -35,6 +36,11 @@ public class InfrastructureBootstrapper
         services.AddTransient<ICategoryRepository, CategoryRepository>();
         services.AddTransient<IBannerRepository, BannerRepository>();
         services.AddTransient<ISliderRepository, SliderRepository>();
+        services.AddTransient<IShippingMethodRepository, ShippingMethodRepository>();
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+
+
+
         services.AddTransient(_ => new DapperContext(connectionString));
         services.AddDbContext<ShopContext>(option =>
         {

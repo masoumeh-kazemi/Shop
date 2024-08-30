@@ -53,7 +53,8 @@ public static class ProductMapper
             CreationDate = product.CreationDate,
             Id = product.Id,
             ImageName = product.ImageName,
-            Slug = product.Title
+            Slug = product.Slug,
+            Title = product.Title
         };
     }
 
@@ -66,6 +67,7 @@ public static class ProductMapper
                 Id = s.Id,
                 ParentId = s.ParentId,
                 Slug = s.Slug,
+                Title = s.Title,
                 SeoData = s.SeoData
             }).ToListAsync();
 
@@ -79,6 +81,7 @@ public static class ProductMapper
                     Id = s.Id,
                     ParentId = s.ParentId,
                     Slug = s.Slug,
+                    Title = s.Title,
                     SeoData = s.SeoData
                 })
                 .FirstOrDefaultAsync();

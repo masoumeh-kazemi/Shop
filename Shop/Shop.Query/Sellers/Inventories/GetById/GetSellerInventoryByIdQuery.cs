@@ -10,25 +10,53 @@ public record GetSellerInventoryByIdQuery(long InventoryId) : IQuery<InventoryDt
 
 public class GetSellerInventoryByIdQueryHandler : IQueryHandler<GetSellerInventoryByIdQuery, InventoryDto>
 {
-    private readonly DapperContext _dapperContext;
+    //private readonly DapperContext _dapperContext;
 
-    public GetSellerInventoryByIdQueryHandler(DapperContext dapperContext)
+    //public GetSellerInventoryByIdQueryHandler(DapperContext dapperContext)
+    //{
+    //    _dapperContext = dapperContext;
+    //}
+    //public async Task<InventoryDto> Handle(GetSellerInventoryByIdQuery request, CancellationToken cancellationToken)
+    //{
+    //    using var connection = _dapperContext.CreateConnection();
+    //    var sql =
+    //        $"SELECT i.Id, SellerId, ProductId, Count, Price, i.CreationDate, DiscountPercentage, s.ShopName" +
+    //        $"p.Title as ProductTitle, p.ImageName as ProductImage" +
+    //        $"FROM {_dapperContext.Inventories} i inner join {_dapperContext.Sellers} s on i.SellerId = s.Id" +
+    //        $"inner join {_dapperContext.Products} p on i.ProductId = p.Id" +
+    //        $"WHERE i.Id=@id";
+
+    //    var inventory = await connection.QueryFirstOrDefaultAsync<InventoryDto>(sql, new { id = request.InventoryId });
+    //    if (inventory == null)
+    //        return null;
+
+    //    return inventory;
+    //}
+
+
+    private readonly DapperContext _context;
+
+    public GetSellerInventoryByIdQueryHandler(DapperContext context)
     {
-        _dapperContext = dapperContext;
+        _context = context;
     }
-    public async Task<InventoryDto> Handle(GetSellerInventoryByIdQuery request, CancellationToken cancellationToken)
+    public async Task<InventoryDto?> Handle(GetSellerInventoryByIdQuery request, CancellationToken cancellationToken)
     {
-        using var connection = _dapperContext.CreateConnection();
-        var sql =
-            $"SELECT i.Id, SellerId, ProductId, Count, Price, i.CreationDate, DiscountPercentage, s.ShopName" +
-            $"p.Title as ProductTitle, p.ImageName as ProductImage" +
-            $"FROM {_dapperContext.Inventories} i inner join {_dapperContext.Sellers} s on i.SellerId = s.Id" +
-            $"inner join {_dapperContext.Products} p on i.ProductId = p.Id" +
-            $"WHERE i.Id=@id";
+        using var connection = _context.CreateConnection();
+
+
+        //    var sql =
+        //        $"SELECT i.Id, SellerId, ProductId, Count, Price, i.CreationDate, DiscountPercentage, s.ShopName" +
+        //        $"p.Title as ProductTitle, p.ImageName as ProductImage" +
+        //        $"FROM {_dapperContext.Inventories} i inner join {_dapperContext.Sellers} s on i.SellerId = s.Id" +
+        //        $"inner join {_dapperContext.Products} p on i.ProductId = p.Id" +
+        //        $"WHERE i.Id=@id";
+        var sql = @$"SELECT Top(1) i.Id, SellerId , ProductId ,Count , Price,i.CreationDate , DiscountPercentage , s.ShopName,
+                        p.Title as ProductTitle,p.ImageName as ProductImage
+            FROM {_context.Inventories} i inner join {_context.Sellers} s on i.SellerId=s.Id  
+            inner join {_context.Products} p on i.ProductId=p.Id WHERE i.Id=@id";
 
         var inventory = await connection.QueryFirstOrDefaultAsync<InventoryDto>(sql, new { id = request.InventoryId });
-        if (inventory == null)
-            return null;
 
         return inventory;
     }

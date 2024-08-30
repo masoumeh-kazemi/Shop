@@ -34,9 +34,12 @@
     <Folder Include="Sellers\GetByUserId\" />
     <Folder Include="Sellers\Inventories\GetById\" />
     <Folder Include="Sellers\Inventories\GetList\" />
+    <Folder Include="Sellers\Inventories\GetByProductId\" />
     <Folder Include="SiteEntities\Banners\GetById\" />
     <Folder Include="SiteEntities\Banners\GetList\" />
     <Folder Include="SiteEntities\DTOs\" />
+    <Folder Include="SiteEntities\ShippingMethod\GetList\" />
+    <Folder Include="SiteEntities\ShippingMethod\GetById\" />
     <Folder Include="SiteEntities\Sliders\GetById\" />
     <Folder Include="Users\Addresses\GetById\" />
     <Folder Include="Users\Addresses\GetList\" />

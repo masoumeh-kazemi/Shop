@@ -17,7 +17,6 @@ public class ProductDto : BaseDto
     public SeoData SeoData { get;  set; }
     public List<ProductImageDto> Images { get;  set; }
     public List<ProductSpecificationDto> Specifications { get;  set; }
-    public List<ProductCategoryDto> ProductCategoryDtos { get; set; }
 }
 
 public class ProductFilterData : BaseDto

@@ -84,6 +84,7 @@ builder.Services.AddSwaggerGen(setup =>
     });
 
 });
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.RegisterShopDependency(connectionString);
 builder.Services.RegisterApiDependency(builder.Configuration);
@@ -102,8 +103,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseCors("ShopApi");
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseApiCustomExceptionHandler();
 app.MapControllers();
+app.MapGet("/", () => "Worker Process Name : " + System.Diagnostics.Process.GetCurrentProcess().ProcessName);
 app.Run();

@@ -89,6 +89,24 @@ public class User : AggregateRoot
             , address.Family, address.NationalCode);
     }
 
+    public void SetActiveAddress(long addressId)
+    {
+        var currentAddress = Addresses.FirstOrDefault(f=>f.Id == addressId);
+        if (currentAddress == null)
+            throw new NullOrEmptyDomainDataException("Address not found");
+
+        foreach (var address in Addresses)
+        {
+            address.SetDeActive();
+        }
+
+        currentAddress.SetActive();
+    }
+    public void ChangePassword(string newPassword)
+    {
+        NullOrEmptyDomainDataException.CheckString(newPassword, nameof(newPassword));
+        Password = newPassword;
+    }
     public void ChargeWallet(Wallet wallet)
     {
         wallet.UserId = Id;
@@ -131,7 +149,7 @@ public class User : AggregateRoot
 
         if(!string.IsNullOrWhiteSpace(email)) 
             if (email.IsValidEmail() == false)
-             throw new InvalidDomainDataException("ایمیل ناعتبر است");
+             throw new InvalidDomainDataException("ایمیل نامعتبر است");
 
         if (phoneNumber != PhoneNumber)
             if (userDomainService.PhoneNumberIsExist(phoneNumber))

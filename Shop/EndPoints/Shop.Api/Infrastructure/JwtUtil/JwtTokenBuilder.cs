@@ -10,7 +10,9 @@ public class JwtTokenBuilder
 {
     public static string BuildToken(UserDto user, IConfiguration configuration)
     {
+
         var roles = user.Roles.Select(s => s.RoleTitle);
+
         var claims = new List<Claim>()
         {
             new Claim(ClaimTypes.MobilePhone,user.PhoneNumber),

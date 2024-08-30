@@ -49,6 +49,7 @@ public class SeoDataViewModel
 
     public SeoData Map()
     {
-        return new SeoData(MetaKeyWords, MetaDescription, MetaTitle, IndexPage, Canonical, Schema);
+        var seoData = new SeoData(MetaKeyWords, MetaDescription, MetaTitle, IndexPage, Canonical, Schema);
+        return seoData;
     }
 }

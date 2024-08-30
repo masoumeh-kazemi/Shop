@@ -14,6 +14,13 @@
   <ItemGroup>
     <Folder Include="Categories\Edit\" />
     <Folder Include="Comments\Edit\" />
+    <Folder Include="Comments\Delete\" />
+    <Folder Include="Orders\Finally\" />
+    <Folder Include="Orders\SendOrder\" />
+    <Folder Include="SiteEntities\ShippingMethods\Create\" />
+    <Folder Include="SiteEntities\ShippingMethods\Edit\" />
+    <Folder Include="SiteEntities\ShippingMethods\Delete\" />
+    <Folder Include="SiteEntities\Sliders\Delete\" />
     <Folder Include="Users\AddToken\" />
     <Folder Include="Orders\DecreaseItemCount\" />
     <Folder Include="Orders\IncreaseItemCount\" />
@@ -21,7 +28,6 @@
     <Folder Include="Orders\RemoveItem\" />
     <Folder Include="Products\Create\" />
     <Folder Include="Products\Edit\" />
-    <Folder Include="Products\AddImage\" />
     <Folder Include="Products\RemoveImage\" />
     <Folder Include="Roles\Create\" />
     <Folder Include="Roles\Edit\" />
@@ -34,6 +40,7 @@
     <Folder Include="Users\Edit\" />
     <Folder Include="Users\EditAddress\" />
     <Folder Include="Users\DeleteAddress\" />
+    <Folder Include="Users\ChangePassword\" />
     <Folder Include="Users\RemoveToken\" />
     <Folder Include="Users\Register\" />
   </ItemGroup>

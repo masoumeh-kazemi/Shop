@@ -21,13 +21,14 @@ public class GetRoleListQueryHandler : IQueryHandler<GetRoleListQuery, List<Role
     }
     public async Task<List<RoleDto>> Handle(GetRoleListQuery request, CancellationToken cancellationToken)
     {
-        return await _context.Roles.Select(role => new RoleDto()
+        var roles = await _context.Roles.Select(role => new RoleDto()
         {
             CreationDate = role.CreationDate,
             Id = role.Id,
             Permissions = role.Permissions.Select(s => s.Permission).ToList(),
             Title = role.Title,
         }).ToListAsync(cancellationToken: cancellationToken);
+        return roles;
 
     }
 }

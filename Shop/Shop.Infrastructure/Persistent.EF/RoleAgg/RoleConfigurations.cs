@@ -12,8 +12,14 @@ public class RoleConfigurations :IEntityTypeConfiguration<Role>
         builder.Property(b => b.Title)
             .IsRequired()
             .HasMaxLength(60);
+            
 
         builder.OwnsMany(b => b.Permissions,
-            option => { option.ToTable("Permissions", "role"); });
+            option =>
+            {
+                option.ToTable("Permissions", "role");
+                option.HasKey(b => b.Id);
+
+            });
     }
 }

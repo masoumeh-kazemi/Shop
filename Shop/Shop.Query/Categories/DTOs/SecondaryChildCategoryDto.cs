@@ -11,3 +11,4 @@ public class SecondaryChildCategoryDto : BaseDto
     public long ParentId { get; set; }
     
 }
+  

@@ -29,7 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EndPoints", "EndPoints", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shop.Api", "Shop\EndPoints\Shop.Api\Shop.Api.csproj", "{F7CEA1C4-ABE8-4FA2-9B40-9ABC07556FDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.AspNetCore", "Common\Common.AspNetCore\Common.AspNetCore.csproj", "{BFAFF1CF-8EE8-458F-AF19-6B7B18D14308}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.AspNetCore", "Common\Common.AspNetCore\Common.AspNetCore.csproj", "{BFAFF1CF-8EE8-458F-AF19-6B7B18D14308}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -86,6 +86,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{0F243E86-A894-4B1B-8D04-EF8C535ADA34} = {08C06ECC-C311-45CA-9C0C-386D795E41C3}
 		{DC855822-678F-44BC-851A-642C02C1AA2B} = {0F243E86-A894-4B1B-8D04-EF8C535ADA34}
 		{FB3B4022-9B70-4132-BBEB-B39FF2D95BEF} = {0F243E86-A894-4B1B-8D04-EF8C535ADA34}
 		{23356675-8ACB-495B-8F5B-361D4A1D653A} = {0F243E86-A894-4B1B-8D04-EF8C535ADA34}

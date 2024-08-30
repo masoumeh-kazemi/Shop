@@ -1,13 +1,15 @@
 ﻿using Common.Application;
 using Shop.Domain.OrderAgg;
 using Shop.Domain.OrderAgg.Repository;
+using Shop.Domain.OrderAgg.ValueObjects;
+using Shop.Domain.SiteEntities.Repositories;
 
 namespace Shop.Application.Orders.Checkout;
 
 public class CheckoutOrderCommand : IBaseCommand
 {
     public CheckoutOrderCommand(long userId, string shire, string city, string postalCode, string postalAddress
-        , string phoneNumber, string name, string family, string nationalCode)
+        , string phoneNumber, string name, string family, string nationalCode, long shippingMethodId)
     {
         UserId = userId;
         Shire = shire;
@@ -18,6 +20,7 @@ public class CheckoutOrderCommand : IBaseCommand
         Name = name;
         Family = family;
         NationalCode = nationalCode;
+        ShippingMethodId = shippingMethodId;
     }
     public long UserId { get; private set; }
     public string Shire { get; private set; }
@@ -28,6 +31,7 @@ public class CheckoutOrderCommand : IBaseCommand
     public string Name { get; private set; }
     public string Family { get; private set; }
     public string NationalCode { get; private set; }
+    public long ShippingMethodId { get; private set; }
 }
 
 
@@ -35,9 +39,12 @@ public class CheckoutOrderCommand : IBaseCommand
 public class CheckoutOrderCommandHandler : IBaseCommandHandler<CheckoutOrderCommand>
 {
     private readonly IOrderRepository _repository;
-    public CheckoutOrderCommandHandler(IOrderRepository repository)
+    private readonly IShippingMethodRepository _shippingMethodRepository;
+
+    public CheckoutOrderCommandHandler(IOrderRepository repository, IShippingMethodRepository shippingMethodRepository)
     {
         _repository = repository;
+        _shippingMethodRepository = shippingMethodRepository;
     }
     public async Task<OperationResult> Handle(CheckoutOrderCommand request, CancellationToken cancellationToken)
     {
@@ -48,7 +55,11 @@ public class CheckoutOrderCommandHandler : IBaseCommandHandler<CheckoutOrderComm
         var address = new OrderAddress(request.Shire, request.City, request.PostalCode, request.PostalAddress,
             request.PhoneNumber, request.Name, request.Family, request.NationalCode);
 
-        currentOrder.Checkout(address);
+        var shippingMethod = await _shippingMethodRepository.GetAsync(request.ShippingMethodId);
+        if(shippingMethod == null)
+            return OperationResult.Error();
+
+        currentOrder.Checkout(address, new OrderShippingMethod(shippingMethod.Title, shippingMethod.Cost));
         await _repository.Save();
         return OperationResult.Success();
     }

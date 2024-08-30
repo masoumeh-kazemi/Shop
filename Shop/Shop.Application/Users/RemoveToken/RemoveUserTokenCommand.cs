@@ -23,7 +23,7 @@ internal class RemoveUserTokenCommandHandler : IBaseCommandHandler<RemoveUserTok
         {
             return OperationResult.NotFound();
         }
-         
+        
         user.RefreshToken(request.TokenId);
         await _userRepository.Save();
         return OperationResult.Success();

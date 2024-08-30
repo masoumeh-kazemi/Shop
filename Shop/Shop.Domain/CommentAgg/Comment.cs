@@ -20,6 +20,7 @@ public class Comment : AggregateRoot
         Status = CommentStatus.Pennding;
     }
 
+
     public void Edit(string text)
     {
         NullOrEmptyDomainDataException.CheckString(text, nameof(text));

@@ -94,21 +94,26 @@ namespace Shop.Api.Controllers
             return QueryResult(result);
         }
 
-        [PermissionChecker(Permission.Seller_Management)]
+        //[PermissionChecker(Permission.Seller_Management)]
         [HttpGet("Inventory/{inventoryId}")]
         public async Task<ApiResult<InventoryDto?>> GetInventory(long inventoryId)
         {
-            var seller = await _sellerFacade.GetSellerByUserId(User.GetUserId());
-            if (seller == null)
-                return QueryResult(new InventoryDto());
+            //var seller = await _sellerFacade.GetSellerByUserId(User.GetUserId());
+            //if (seller == null)
+            //    return QueryResult(new InventoryDto());
 
+            //var result = await _sellerInventoryFacade.GetById(inventoryId);
+
+            //if (result == null || result.SellerId != seller.Id)
+            //    return QueryResult(new InventoryDto());
+
+            //return QueryResult(result);
             var result = await _sellerInventoryFacade.GetById(inventoryId);
-
-            if (result == null || result.SellerId != seller.Id)
+            if (result == null)
                 return QueryResult(new InventoryDto());
-
             return QueryResult(result);
         }
+
 
     }
 }

@@ -2,6 +2,7 @@
 using Common.Application.SecurityUtil;
 using MediatR;
 using Shop.Application.Users.AddToken;
+using Shop.Application.Users.ChangePassword;
 using Shop.Application.Users.Create;
 using Shop.Application.Users.Edit;
 using Shop.Application.Users.Register;
@@ -22,6 +23,8 @@ public interface IUserFacade
     Task<OperationResult> RegisterUser(RegisterUserCommand command);
     Task<OperationResult> CreateUser(CreateUserCommand command);
     Task<OperationResult> EditUser(EditUserCommand command);
+    Task<OperationResult> ChangePassword(ChangeUserPasswordCommand command);
+
 
     Task<OperationResult> AddToken(AddUserTokenCommand command);
     Task<OperationResult> RemoveToken(RemoveUserTokenCommand  command);
@@ -57,6 +60,11 @@ public class UserFacade : IUserFacade
     {
         return await _mediator.Send(command);
 
+    }
+
+    public async Task<OperationResult> ChangePassword(ChangeUserPasswordCommand command)
+    {
+        return await _mediator.Send(command);
     }
 
     public async Task<OperationResult> AddToken(AddUserTokenCommand command)

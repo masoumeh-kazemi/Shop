@@ -1,10 +1,13 @@
-﻿using Common.Application;
+﻿using AutoMapper;
+using Common.Application;
 using Common.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Api.Infrastructure.Security;
+using Shop.Api.ViewModels.Users;
 using Shop.Application.Categories.Create;
+using Shop.Application.Users.ChangePassword;
 using Shop.Application.Users.Create;
 using Shop.Application.Users.Edit;
 using Shop.Domain.RoleAgg.Enums;
@@ -15,15 +18,16 @@ using Shop.Query.Users.DTOs;
 namespace Shop.Api.Controllers
 {
 
-    [Authorize]
+    //[Authorize]
     public class UserController : ApiController
     {
 
         private readonly IUserFacade _userFacade;
-
-        public UserController(IUserFacade userFacade)
+        private readonly IMapper _mapper;
+        public UserController(IUserFacade userFacade, IMapper mapper)
         {
             _userFacade = userFacade;
+            _mapper = mapper;
         }
 
         [PermissionChecker(Permission.User_Management)]
@@ -42,7 +46,7 @@ namespace Shop.Api.Controllers
             return QueryResult(result);
         }
 
-        [PermissionChecker(Permission.User_Management)]
+        //[PermissionChecker(Permission.User_Management)]
         [HttpPost]
         public async Task<ApiResult> CreateUser(CreateUserCommand command)
         {
@@ -52,18 +56,43 @@ namespace Shop.Api.Controllers
         }
 
         [PermissionChecker(Permission.User_Management)]
+        [HttpPut("current")]
+        public async Task<ApiResult> EditUser([FromForm] EditUserViewModel command)
+        {
+            var commandModel = new EditUserCommand(User.GetUserId(), command.Avatar, command.Name
+                , command.Family, command.PhoneNumber, command.Email, command.Gender);
+
+            var result = await _userFacade.EditUser(commandModel);
+            return CommandResult(result);
+        }
+
+        [PermissionChecker(Permission.User_Management)]
         [HttpPut]
-        public async Task<ApiResult> EditUser([FromForm] EditUserCommand command)
+        public async Task<ApiResult> Edit([FromForm] EditUserCommand command)
         {
             var result = await _userFacade.EditUser(command);
             return CommandResult(result);
         }
 
-        [HttpGet("currentN")]
+        [HttpPut("ChangePassword")]
+        public async Task<ApiResult> ChangePassword(ChangePasswordViewModel command)
+        {
+            var changePasswordModel = _mapper.Map<ChangeUserPasswordCommand>(command);
+            changePasswordModel.UserId = User.GetUserId();
+            
+            var result = await _userFacade.ChangePassword(changePasswordModel);
+            return CommandResult(result);
+
+        }
+
+        [HttpGet("current")]
         public async Task<ApiResult<UserDto>> GetCurrentUser()
         {
+            var userId = User.GetUserId();
             var result = await _userFacade.GetUserById(User.GetUserId());
             return QueryResult(result);
         }
+
+        
     }
 }

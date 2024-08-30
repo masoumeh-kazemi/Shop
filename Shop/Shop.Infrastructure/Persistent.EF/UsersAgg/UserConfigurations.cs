@@ -56,6 +56,8 @@ public class UserConfigurations : IEntityTypeConfiguration<User>
 
         builder.OwnsMany(b => b.Addresses, option =>
         {
+
+            option.HasKey(b => b.Id);
             option.HasIndex(b => b.UserId);
             option.ToTable("Addresses", "user");
 

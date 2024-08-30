@@ -36,10 +36,10 @@ namespace Shop.Api.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("{id}")]
-        public async Task<ApiResult<CategoryDto>> GetCategoryById(long id)
+        [HttpGet("{categoryId}")]
+        public async Task<ApiResult<CategoryDto>> GetCategoryById(long categoryId)
         {
-            var result = await _categoryFacade.GetCategoryById(id);
+            var result = await _categoryFacade.GetCategoryById(categoryId);
             return QueryResult(result);
         }
 
@@ -86,7 +86,7 @@ namespace Shop.Api.Controllers
 
         }
 
-        [HttpDelete]
+        [HttpDelete("{categoryId}")]
         public async Task<ApiResult> RemoveCategory(long categoryId)
         {
             var result = await _categoryFacade.RemoveCategory(categoryId);

@@ -53,11 +53,11 @@ namespace Shop.Api.Controllers
             return CommandResult(result);
         }
 
-        //[HttpDelete("{sliderId}")]
-        //public async Task<ApiResult> Delete(long sliderId)
-        //{
-        //    var result = await _facade.DeleteSlider(sliderId);
-        //    return CommandResult(result);
-        //}
+        [HttpDelete("{sliderId}")]
+        public async Task<ApiResult> Delete(long sliderId)
+        {
+            var result = await _facade.DeleteSlider(sliderId);
+            return CommandResult(result);
+        }
     }
 }

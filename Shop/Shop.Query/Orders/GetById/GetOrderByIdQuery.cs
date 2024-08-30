@@ -36,6 +36,7 @@ public class GetOrderByIdQueryHandler : IQueryHandler<GetOrderByIdQuery, OrderDt
         var orderDto = order.Map();
         orderDto.UserFullName = await _shopContext.Users.Where(f => f.Id == orderDto.UserId)
             .Select(s => $"{s.Name}{s.Family}").FirstAsync(cancellationToken);
+
         orderDto.Items = await orderDto.GetOrderItems(_dapperContext);
         return orderDto;
     }

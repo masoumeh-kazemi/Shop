@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Common.Domain;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Shop.Domain.CategoryAgg;
 using Shop.Domain.CommentAgg;
 using Shop.Domain.OrderAgg;
@@ -12,9 +14,10 @@ namespace Shop.Infrastructure.Persistent.EF;
 
 public class ShopContext : DbContext
 {
-    public ShopContext(DbContextOptions<ShopContext> options) : base(options)
+    private readonly IMediator _mediator;
+    public ShopContext(DbContextOptions<ShopContext> options, IMediator mediator) : base(options)
     {
-
+        _mediator = mediator;
     }
 
 
@@ -27,9 +30,33 @@ public class ShopContext : DbContext
     public DbSet<SellerInventory> Inventories { get; set; }
     public DbSet<Slider> Sliders { get; set; }
     public DbSet<Banner> Banners { get; set; }
+    public DbSet<ShippingMethod> ShippingMethods { get; set; }
+
     public DbSet<User> Users { get; set; }
 
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    {
+        var modifiedEntities = GetModifiedEntities();
+        await PublishEvents(modifiedEntities);
+        return await base.SaveChangesAsync(cancellationToken);
+    }
+    private List<AggregateRoot> GetModifiedEntities() =>
+        ChangeTracker.Entries<AggregateRoot>()
+            .Where(x => x.State != EntityState.Detached)
+            .Select(c => c.Entity)
+            .Where(c => c.DomainEvents.Any()).ToList();
 
+    private async Task PublishEvents(List<AggregateRoot> modifiedEntities)
+    {
+        foreach (var entity in modifiedEntities)
+        {
+            var events = entity.DomainEvents;
+            foreach (var domainEvent in events)
+            {
+                await _mediator.Publish(domainEvent);
+            }
+        }
+    }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);

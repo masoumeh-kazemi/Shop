@@ -27,7 +27,7 @@ internal class GetProductsForShopQueryHandler : IQueryHandler<GetProductsForShop
         _context = context;
     }
     public async Task<ProductShopResult> Handle(GetProductsForShopQuery request, CancellationToken cancellationToken)
-    {
+     {
         var @params = request.FilterParams;
         string conditions = "";
         string orderBy = "";
@@ -91,7 +91,7 @@ internal class GetProductsForShopQueryHandler : IQueryHandler<GetProductsForShop
             From {_dapperContext.Products} p
             left join {_dapperContext.Inventories} i on p.Id=i.ProductId
             left join {_dapperContext.Sellers} s on i.SellerId=s.Id)A
-            WHERE  A.RN = 1 and A.Status=@status  {conditions}";
+            WHERE  A.RN = 1 and A.Status=@status {conditions}";
 
 
         var resultSql = @$"SELECT A.Slug,A.Id ,A.Title,A.Price,A.InventoryId,A.DiscountPercentage,A.ImageName
@@ -101,7 +101,7 @@ internal class GetProductsForShopQueryHandler : IQueryHandler<GetProductsForShop
             From {_dapperContext.Products} p
             left join {_dapperContext.Inventories} i on p.Id=i.ProductId
             left join {_dapperContext.Sellers} s on i.SellerId=s.Id)A
-            WHERE  A.RN = 1 and A.Status=@status  {conditions} order By {orderBy} offset @skip ROWS FETCH NEXT @take ROWS ONLY";
+            WHERE  A.RN = 1 and A.Status=@status {conditions} order By {orderBy} offset @skip ROWS FETCH NEXT @take ROWS ONLY";
 
         var count = await sqlConnection.QueryFirstAsync<int>(sql, new { status = SellerStatus.Accepted });
         var result = await sqlConnection.QueryAsync<ProductShopDto>(resultSql,
@@ -112,6 +112,7 @@ internal class GetProductsForShopQueryHandler : IQueryHandler<GetProductsForShop
             Data = result.ToList(),
             CategoryDto = selectedCategory
         };
+        var z = model.Data;
         model.GeneratePaging(count, @params.Take, @params.PageId);
         return model;
     }
